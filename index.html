@@ -75,7 +75,7 @@
       text-decoration: none;
     }
     .section:hover {
-      transform: scale(1.03);
+      transform: scale(1.03) rotateY(10deg);
       box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
     }
     .section h2 {
@@ -131,6 +131,102 @@
     .back-button:hover {
       background: var(--secondary-color);
     }
+    .confirmation-dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px var(--shadow-color);
+      text-align: center;
+      z-index: 1000;
+    }
+    .confirmation-dialog p {
+      margin-bottom: 20px;
+    }
+    .confirmation-dialog button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .confirmation-dialog button.confirm {
+      background: var(--accent-color);
+      color: var(--text-light);
+    }
+    .confirmation-dialog button.cancel {
+      background: #ccc;
+      color: var(--text-dark);
+    }
+    .confirmation-dialog button.confirm:hover {
+      background: var(--secondary-color);
+    }
+    .confirmation-dialog button.cancel:hover {
+      background: #bbb;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .payment-options button {
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent-color);
+      color: var(--text-light);
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .payment-options button:hover {
+      background: var(--secondary-color);
+    }
+    .cliq-payment {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .cliq-payment p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .cliq-payment input[type="file"] {
+      margin-top: 10px;
+    }
+    .contact-page {
+      text-align: center;
+      padding: 20px;
+    }
+    .contact-page p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .contact-page a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: var(--text-light);
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .contact-page a:hover {
+      background: var(--secondary-color);
+    }
   </style>
 </head>
 <body>
@@ -146,21 +242,18 @@
   </div>
   <div class="section">
     <h2>Instagram & Facebook Account Recovery Service</h2>
-    <p>Instagram & Facebook recovery service within short time frames ⏳ (1-7 working days) | استعادة الحسابات المغلقه والمسكره خلال فتره قياسيه وسريعه ومضمونه من خلال افضل الموظفين المؤهلين لتقديم الحلول والخدمه لإسترجاع الحساب المطلوب.</p>
+    <p>Instagram & Facebook recovery service within short time frames ⏳ (1-7 working days).</p>
   </div>
   <div class="section">
     <h2>Google Certified Digital Marketing Certificate</h2>
     <p>Google Certified Digital Marketing Certificate | شهادة مهارات قوقل</p>
+    <div class="price">25JOD / 35.5$</div>
   </div>
   <div class="section">
     <h2>Instagram Account Termination Service</h2>
   </div>
-  <div class="section">
-    <h2>Meta Certificates #2</h2>
-  </div>
-  <div class="section">
+  <div class="section" id="socialMediaManager">
     <h2>Social Media Manager</h2>
-    <p>Contact us on WhatsApp to discuss details:+44 7537 175422</p>
   </div>
 </div>
 
@@ -168,19 +261,63 @@
   <div class="section" id="personal">
     <h2>Personal</h2>
     <p>Get your personal Instagram account verified.</p>
-    <div class="price" id="personalPrice">65JOD / 91.5$</div>
+    <div class="price">65JOD / 91.5$</div>
   </div>
   <div class="section" id="business">
     <h2>Business</h2>
     <p>Get your business Instagram account verified.</p>
-    <div class="price" id="businessPrice">90JOD / 126.85$</div>
+    <div class="price">90JOD / 126.85$</div>
   </div>
   <a href="#" class="back-button" id="backButton">Back to Services</a>
+</div>
+
+<div class="container hidden" id="paymentOptions">
+  <h2>Choose Payment Method</h2>
+  <div class="payment-options">
+    <button id="visaButton">Visa</button>
+    <button id="mastercardButton">Mastercard</button>
+    <button id="applePayButton">Apple Pay</button>
+    <button id="cliqButton">CLIQ</button>
+  </div>
+  <a href="#" class="back-button" id="backToOptionsButton">Back to Options</a>
+</div>
+
+<div class="container hidden" id="cliqPaymentPage">
+  <h2>CLIQ Payment Details</h2>
+  <div class="cliq-payment">
+    <p>Send payment to: <strong>V69, Abdallah Nofan</strong></p>
+    <p>Upload proof of payment:</p>
+    <input type="file" id="paymentProof" accept="image/*, .pdf">
+  </div>
+  <a href="#" class="back-button" id="backToPaymentOptionsButton">Back to Payment Options</a>
+</div>
+
+<div class="container hidden" id="contactPage">
+  <div class="contact-page">
+    <h2>Contact Us</h2>
+    <p>For guidance or inquiries, please contact us on WhatsApp or Instagram.</p>
+    <a href="https://wa.me/447537175422" target="_blank">WhatsApp</a>
+    <a href="https://instagram.com/yourinstagram" target="_blank" style="margin-top: 10px;">Instagram</a>
+  </div>
+  <a href="#" class="back-button" id="backToMainButton">Back to Services</a>
 </div>
 
 <footer class="footer">
   <p class="copyright">© 2025 Abdallah Nofan Services. All rights reserved.</p>
 </footer>
+
+<!-- Confirmation Dialogs -->
+<div class="overlay hidden" id="overlay"></div>
+<div class="confirmation-dialog hidden" id="personalConfirmationDialog">
+  <p>Are you sure you want to proceed with the Personal account verification?</p>
+  <button class="confirm" id="confirmPersonalButton">Yes, Proceed</button>
+  <button class="cancel" id="cancelPersonalButton">Cancel</button>
+</div>
+<div class="confirmation-dialog hidden" id="businessConfirmationDialog">
+  <p>Are you sure you want to proceed with the Business account verification?</p>
+  <button class="confirm" id="confirmBusinessButton">Yes, Proceed</button>
+  <button class="cancel" id="cancelBusinessButton">Cancel</button>
+</div>
 
 <script>
   document.getElementById('instagramVerification').addEventListener('click', function() {
@@ -195,11 +332,85 @@
   });
 
   document.getElementById('personal').addEventListener('click', function() {
-    document.getElementById('personalPrice').classList.add('visible');
+    document.getElementById('overlay').classList.remove('hidden');
+    document.getElementById('personalConfirmationDialog').classList.remove('hidden');
   });
 
   document.getElementById('business').addEventListener('click', function() {
-    document.getElementById('businessPrice').classList.add('visible');
+    document.getElementById('overlay').classList.remove('hidden');
+    document.getElementById('businessConfirmationDialog').classList.remove('hidden');
+  });
+
+  document.getElementById('confirmPersonalButton').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('personalConfirmationDialog').classList.add('hidden');
+    document.getElementById('verificationOptions').classList.add('hidden');
+    document.getElementById('paymentOptions').classList.remove('hidden');
+  });
+
+  document.getElementById('confirmBusinessButton').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('businessConfirmationDialog').classList.add('hidden');
+    document.getElementById('verificationOptions').classList.add('hidden');
+    document.getElementById('paymentOptions').classList.remove('hidden');
+  });
+
+  document.getElementById('cancelPersonalButton').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('personalConfirmationDialog').classList.add('hidden');
+  });
+
+  document.getElementById('cancelBusinessButton').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('businessConfirmationDialog').classList.add('hidden');
+  });
+
+  document.getElementById('overlay').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('hidden');
+    document.getElementById('personalConfirmationDialog').classList.add('hidden');
+    document.getElementById('businessConfirmationDialog').classList.add('hidden');
+  });
+
+  const paymentLink = 'https://buy.stripe.com/5kAeXy8YnbH2fZK28a'; // Same payment link for all options
+
+  document.getElementById('visaButton').addEventListener('click', function() {
+    window.location.href = paymentLink;
+  });
+
+  document.getElementById('mastercardButton').addEventListener('click', function() {
+    window.location.href = paymentLink;
+  });
+
+  document.getElementById('applePayButton').addEventListener('click', function() {
+    window.location.href = paymentLink;
+  });
+
+  document.getElementById('cliqButton').addEventListener('click', function() {
+    document.getElementById('paymentOptions').classList.add('hidden');
+    document.getElementById('cliqPaymentPage').classList.remove('hidden');
+  });
+
+  document.getElementById('backToOptionsButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('paymentOptions').classList.add('hidden');
+    document.getElementById('verificationOptions').classList.remove('hidden');
+  });
+
+  document.getElementById('backToPaymentOptionsButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('cliqPaymentPage').classList.add('hidden');
+    document.getElementById('paymentOptions').classList.remove('hidden');
+  });
+
+  document.getElementById('socialMediaManager').addEventListener('click', function() {
+    document.getElementById('mainContainer').classList.add('hidden');
+    document.getElementById('contactPage').classList.remove('hidden');
+  });
+
+  document.getElementById('backToMainButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('contactPage').classList.add('hidden');
+    document.getElementById('mainContainer').classList.remove('hidden');
   });
 </script>
 
