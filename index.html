@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abdallah Nofan Services | خدمات عبدلله نوفان</title>
   <style>
-    /* Modern visuals and transitions */
     :root {
       --background-color: #f5f7fa;
       --accent-color: #0078ff;
@@ -91,6 +90,19 @@
       line-height: 1.8;
       color: var(--text-dark);
     }
+    .price {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .price.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .footer {
       text-align: center;
       padding: 25px 10px;
@@ -103,6 +115,22 @@
       font-size: 12px;
       color: #ddd;
     }
+    .hidden {
+      display: none;
+    }
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: var(--text-light);
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .back-button:hover {
+      background: var(--secondary-color);
+    }
   </style>
 </head>
 <body>
@@ -111,11 +139,11 @@
   <h1>Abdallah Nofan Services | خدمات عبدلله نوفان</h1>
 </header>
 
-<div class="container">
-  <a href="Instagram_Verification_Service.html" class="section">
+<div class="container" id="mainContainer">
+  <div class="section" id="instagramVerification">
     <h2>Instagram Verification Service</h2>
     <p>We provide a permanent Instagram verification service with no monthly fees. Ensure your account is authenticated professionally.</p>
-  </a>
+  </div>
   <div class="section">
     <h2>Instagram & Facebook Account Recovery Service</h2>
     <p>Instagram & Facebook recovery service within short time frames ⏳ (1-7 working days) | استعادة الحسابات المغلقه والمسكره خلال فتره قياسيه وسريعه ومضمونه من خلال افضل الموظفين المؤهلين لتقديم الحلول والخدمه لإسترجاع الحساب المطلوب.</p>
@@ -132,13 +160,48 @@
   </div>
   <div class="section">
     <h2>Social Media Manager</h2>
-    <p>Contact us on WhatsApp to discuss details: ‪+44 7537 175422‬</p>
+    <p>Contact us on WhatsApp to discuss details: ‪+44 7537 175422‬</p>
   </div>
+</div>
+
+<div class="container hidden" id="verificationOptions">
+  <div class="section" id="personal">
+    <h2>Personal</h2>
+    <p>Get your personal Instagram account verified.</p>
+    <div class="price" id="personalPrice">65JOD / 91.5$</div>
+  </div>
+  <div class="section" id="business">
+    <h2>Business</h2>
+    <p>Get your business Instagram account verified.</p>
+    <div class="price" id="businessPrice">90JOD / 126.85$</div>
+  </div>
+  <a href="#" class="back-button" id="backButton">Back to Services</a>
 </div>
 
 <footer class="footer">
   <p class="copyright">© 2025 Abdallah Nofan Services. All rights reserved.</p>
 </footer>
+
+<script>
+  document.getElementById('instagramVerification').addEventListener('click', function() {
+    document.getElementById('mainContainer').classList.add('hidden');
+    document.getElementById('verificationOptions').classList.remove('hidden');
+  });
+
+  document.getElementById('backButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('verificationOptions').classList.add('hidden');
+    document.getElementById('mainContainer').classList.remove('hidden');
+  });
+
+  document.getElementById('personal').addEventListener('click', function() {
+    document.getElementById('personalPrice').classList.add('visible');
+  });
+
+  document.getElementById('business').addEventListener('click', function() {
+    document.getElementById('businessPrice').classList.add('visible');
+  });
+</script>
 
 </body>
 </html>
